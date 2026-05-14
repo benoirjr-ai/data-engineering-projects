@@ -5,6 +5,7 @@
 # Python junk
 __pycache__/
 *.pyc
-
+data/male_teams.csv
+beginner/src/
 # Environment variables (if you have them)
 .env

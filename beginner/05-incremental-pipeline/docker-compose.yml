@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: incremental_postgres_db
+    environment:
+      POSTGRES_USER: incremental_user
+      POSTGRES_PASSWORD: incremental_password
+      POSTGRES_DB: incremental_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - incremental_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  incremental_postgres_data:

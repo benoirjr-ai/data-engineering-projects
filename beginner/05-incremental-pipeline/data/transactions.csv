@@ -1,0 +1,7 @@
+transaction_id,customer_id,transaction_date,amount,status
+1001,C001,2026-09-01,125.50,completed
+1002,C002,2026-09-01,75.00,completed
+1003,C001,2026-09-02,250.00,completed
+1004,C003,2026-09-02,50.00,completed
+1005,C002,2026-09-03,120.00,completed
+1006,C003,2026-09-05,200.00,completed

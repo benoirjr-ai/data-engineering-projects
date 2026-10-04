@@ -1,0 +1,27 @@
+sources:
+  - name: insurance
+    description: "Insurance claims loaded into DuckDB by the upstream pipeline."
+
+    schema: main
+
+    tables:
+      - name: claims
+        description: "Enriched insurance claims produced by the PySpark pipeline."
+
+        columns:
+          - name: claim_id
+            description: "unique identifier for an insurance claim."
+            data_tests:
+              - not_null
+              - unique
+
+          - name: claim_type
+            description: "Type of insurance claim."
+            data_tests:
+              - not_null
+              - accepted_values:
+                values:
+                  - AUTO
+                  - HOME
+                  - HEALTH
+                  - TRAVEL

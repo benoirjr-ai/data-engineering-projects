@@ -1,0 +1,251 @@
+version: 2
+
+models:
+  - name: stg_claims
+    description: >
+      Clean staging layer for insurance claims.
+      This model provides a consistent interface over the upstream
+      insurance claims source.
+
+    columns:
+      - name: claim_id
+        description: "Unique identifier for the insurance claim."
+
+      - name: customer_id
+        description: "Unique identifier for the customer."
+
+      - name: customer_name
+        description: "Name of the customer associated with the claim."
+
+      - name: claim_type
+        description: "Insurance claim category."
+
+      - name: claim_amount
+        description: "Monetary value of the insurance claim."
+
+      - name: country
+        description: "Country associated with the claim."
+
+      - name: incident_date
+        description: "Date on which the insured incident occurred."
+
+      - name: created_at
+        description: "Timestamp when the claim record was created."
+
+      - name: claim_amount_band
+        description: "Claim amount category: LOW, MEDIUM, or HIGH."
+
+      - name: incident_age_days
+        description: "Number of days between the incident date and the current date."
+
+      - name: reporting_delay_days
+        description: "Number of days between the incident and claim creation."
+
+      - name: high_value_claim
+        description: "Indicates whether the claim amount is at least 15,000."
+
+      - name: weekend_incident
+        description: "Indicates whether the incident occurred on a weekend."
+
+      - name: long_reporting_delay
+        description: "Indicates whether reporting took more than 7 days."
+
+      - name: risk_indicator_count
+        description: >
+          Number of measurable risk indicators present on the claim.
+          This is an analytical feature, not a fraud determination.
+
+  - name: claim_summary
+    description: >
+      Business-facing summary of insurance claims aggregated by claim type.
+
+    columns:
+      - name: claim_type
+        description: "Insurance claim category."
+
+      - name: total_claims
+        description: "Number of claims for the claim type."
+
+      - name: total_claim_value
+        description: "Total monetary value of claims for the claim type."
+
+      - name: average_claim_value
+        description: "Average monetary value of claims for the claim type."
+
+      - name: high_value_claim_count
+        description: "Number of high-value claims for the claim type."
+
+  - name: fraud_features
+    description: >
+      Customer-level analytical features derived from historical insurance claims.
+      These features describe observable claim behavior and are not fraud decisions.
+
+    columns:
+      - name: customer_id
+        description: "Unique identifier for the customer."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: claim_count
+        description: "Number of claims submitted by the customer."
+        data_tests:
+          - not_null
+
+      - name: total_claim_value
+        description: "Total monetary value of claims submitted by the customer."
+        data_tests:
+          - not_null
+
+      - name: average_claim_value
+        description: "Average monetary value of the customer's claims."
+        data_tests:
+          - not_null
+
+      - name: maximum_claim_value
+        description: "Largest claim submitted by the customer."
+        data_tests:
+          - not_null
+
+      - name: distinct_claim_types
+        description: "Number of different claim types submitted by the customer."
+        data_tests:
+          - not_null
+
+      - name: distinct_countries
+        description: "Number of different countries associated with the customer's claims."
+        data_tests:
+          - not_null
+
+      - name: high_value_claim_count
+        description: "Number of high-value claims submitted by the customer."
+        data_tests:
+          - not_null
+
+      - name: total_risk_indicators
+        description: "Total observable risk indicators across the customer's claims."
+        data_tests:
+          - not_null
+
+  - name: fraud_risk_scores
+    description: >
+      Customer-level analytical risk scores based on observable claim
+      behavior. The score is not a determination of fraud.
+
+    columns:
+
+      - name: customer_id
+        description: "Unique customer identifier."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: risk_score
+        description: "Analytical risk score from 0 to 10."
+        data_tests:
+          - not_null
+
+      - name: risk_level
+        description: "Risk category derived from the analytical risk score."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - LOW
+                  - MEDIUM
+                  - HIGH
+
+  - name: risk_investigation
+    description: >
+      Investigation-oriented analytical dataset combining customer
+      risk scores with the observable claim features behind those scores.
+      This model does not determine whether fraud occurred.
+
+    columns:
+
+      - name: customer_id
+        description: "Unique customer identifier."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: risk_score
+        description: "Analytical risk score from 0 to 10."
+        data_tests:
+          - not_null
+
+      - name: risk_level
+        description: "Risk category derived from the analytical risk score."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - LOW
+                  - MEDIUM
+                  - HIGH
+
+      - name: claim_count
+        description: "Number of claims submitted by the customer."
+        data_tests:
+          - not_null
+
+      - name: maximum_claim_value
+        description: "Largest claim submitted by the customer."
+        data_tests:
+          - not_null
+
+      - name: total_risk_indicators
+        description: "Total observable risk indicators across the customer's claims."
+        data_tests:
+          - not_null  
+
+  - name: risk_level_summary
+    description: >
+      Dashboard-facing summary of customers and observable claim
+      behavior grouped by analytical risk level.
+      This model does not determine whether fraud occurred.
+
+    columns:
+
+      - name: risk_level
+        description: "Analytical risk category: LOW, MEDIUM, or HIGH."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - LOW
+                  - MEDIUM
+                  - HIGH
+
+      - name: customer_count
+        description: "Number of customers in each analytical risk level."
+        data_tests:
+          - not_null
+
+      - name: total_claims
+        description: "Total number of claims associated with customers in the risk level."
+        data_tests:
+          - not_null
+
+      - name: total_claim_value
+        description: "Total value of claims associated with the risk level."
+        data_tests:
+          - not_null
+
+      - name: average_claim_value
+        description: "Average claim value for customers in the risk level."
+        data_tests:
+          - not_null
+
+      - name: average_risk_score
+        description: "Average analytical risk score for the risk level."
+        data_tests:
+          - not_null
+
+      - name: high_value_claim_count
+        description: "Number of high-value claims associated with the risk level."
+        data_tests:
+          - not_null 

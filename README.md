@@ -82,6 +82,8 @@ The project demonstrates how to build a complete data pipeline capable of:
 
 ## 🏗️ Architecture
 
+![Insurance Fraud Detection Platform Architecture](docs/insurance-fraud-platform.png)
+
 ### 1. Claim generation
 
 Synthetic insurance claims are generated using Faker.

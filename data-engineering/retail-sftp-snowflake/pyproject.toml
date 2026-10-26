@@ -1,0 +1,10 @@
+[project]
+name = "retail-sftp-snowflake"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "python-dotenv>=1.2.4",
+    "snowflake-connector-python>=5.1.0",
+]

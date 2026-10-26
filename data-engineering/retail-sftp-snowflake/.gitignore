@@ -1,0 +1,29 @@
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Virtual environments
+.venv/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Local SQLite registry
+data/file_registry.db
+data/file_registry.db-shm
+data/file_registry.db-wal
+
+
+# Runtime ingestion artifacts
+data/quarantine/
+data/processed/
+
+# Local raw data (keep the sample CSV tracked if desired)
+# data/raw/

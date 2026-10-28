@@ -1,0 +1,11 @@
+
+services:
+  sftp:
+    image: atmoz/sftp:latest
+    container_name: retail-sftp
+    ports:
+      - "127.0.0.1:2222:22"
+    volumes:
+      - ./data/sftp:/home/retail/upload
+    command: "retail:${SFTP_PASSWORD:?Set SFTP_PASSWORD in your environment}:1001"
+    restart: unless-stopped

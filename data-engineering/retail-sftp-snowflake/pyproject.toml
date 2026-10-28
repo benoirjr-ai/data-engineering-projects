@@ -1,7 +1,8 @@
+
 [project]
 name = "retail-sftp-snowflake"
 version = "0.1.0"
-description = "Add your description here"
+description = "SFTP-to-Snowflake retail CSV ingestion pipeline"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [

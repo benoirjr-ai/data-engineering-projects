@@ -1,0 +1,7 @@
+customer_id,name,email,city,age
+1,John Doe,JOHN@EMAIL.COM,Yaounde,28
+2,Mary Smith,mary@email.com,Douala,34
+3,Peter Adams,,Yaounde,17
+4,  sarah johnson  ,SARAH@EMAIL.COM, Buea ,42
+5,Michael Brown,INVALID,Douala,abc
+6,David Wilson,david@email.com,Yaounde,67

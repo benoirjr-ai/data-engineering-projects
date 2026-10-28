@@ -16,7 +16,7 @@ def main():
         raise
 
     # Step 2: Validate the downloaded file and load it into Snowflake.
-    # process_file manages validation, quarantine, retries, and registry status.
+    # process_file manages validation, quarantine, and registry status.
     result = process_file(
         csv_path,
         loader=load_csv_to_snowflake,
